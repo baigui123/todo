@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>serialize方法说明</title>
+</head>
+<body>
+	<form id="form">
+		<input type="text" name="username">
+		<input type="password" name="password">
+		<input type="submit" value="提交">
+	</form>
+	<script src="/js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$('#form').on('submit', function () {
+			// 将表单内容拼接成字符串类型的参数
+			// var params = $('#form').serialize();
+			//console.log(params)//username=A19040&password=123111
+			serializeObject($(this));
+			//关闭表单默认提交行为
+			return false;
+		});
+
+		// 将表单中用户输入的内容转换为对象类型
+		function serializeObject (obj) {
+			// 处理结果对象
+			var result = {};
+			// serializeArry()方法是将表单中用户输入的内容转换为数组
+			//数组里面存储的是对象
+			// [{name: 'username', value: '用户输入的内容'}, {name: 'password', value: '123456'}]
+			var params = obj.serializeArray();
+
+			// 循环数组 将数组转换为对象类型
+			//第一个参数是一个数据,第二个参数是一个回调函数,循环多少次,函数就执行多少次
+			//回调函数中有两个参数,第一个index是循环当前的索引
+			//第二个参数索引对应的value是里面的元素
+			$.each(params, function (index, value) {
+				//给对象添加属性并赋值
+				result[value.name] = value.value;
+			})
+			// 将处理的结果返回到函数外部
+			return result;
+		}
+
+	</script>
+</body>
+</html>
